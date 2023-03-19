@@ -1,8 +1,18 @@
-import random
+import string, random, sys, subprocess
+
+# clear screen function
+def clear_screen():
+    operating_system = sys.platform
+
+    if operating_system == 'win32':
+        subprocess.run('cls', shell=True)
+    elif (operating_system == 'linux') or (operating_system == 'darwin'):
+        subprocess.run('clear', shell=True)
 
 def guess(x = 1, y = 10):
     # x -> ínfimo
     # y -> supremo
+    print(f"Adivina el número entre {x} y {y}")
     random_number = random.randint(x, y)
 
     user_guess = random_number + 1
@@ -14,15 +24,19 @@ def guess(x = 1, y = 10):
             if user_guess < x or user_guess > y:
                 raise ValueError
 
+            clear_screen()
+
             # a esta altura ya es un entero perteneciente al [x, y]
             if user_guess < random_number:
-                print("El número es demasiado chico")
+                print(f"Incorrecto. Debe ser mayor que {user_guess}")
             elif user_guess > random_number:
-                print("El número es demasiado grande")
+                print(f"Incorrecto. Debe ser menor que {user_guess}")
             else:
-                print(f"Correcto! La respesta es {random_number}")
+                print(f"Correcto! El número es {random_number}")
 
         except ValueError:
+            clear_screen()
+
             print(f"Debes ingresar un número entero entre {x} y {y}")
 
 
